@@ -55,5 +55,6 @@ func main() {
 		for _, desc := range result.Errors() {
 			fmt.Printf("* %s\n", desc)
 		}
+		os.Exit(4)
 	}
 }
