@@ -11,7 +11,7 @@ import (
 	libconf "github.com/weaming/golib/config"
 	libfs "github.com/weaming/golib/fs"
 	libser "github.com/weaming/golib/serilize"
-	gojc "github.com/xeipuuv/gojsonschema"
+	gojs "github.com/xeipuuv/gojsonschema"
 )
 
 const confPath = "./map.json"
@@ -100,8 +100,8 @@ var handler = func(w http.ResponseWriter, r *http.Request) {
 		} else {
 			absSchema, e := filepath.Abs(schema)
 			OK(e)
-			schemaLoader := gojc.NewReferenceLoader(fmt.Sprintf("file://%v", absSchema))
-			documentLoader := gojc.NewStringLoader(string(data))
+			schemaLoader := gojs.NewReferenceLoader(fmt.Sprintf("file://%v", absSchema))
+			documentLoader := gojs.NewStringLoader(string(data))
 			valid, err := ValidateSchema(schemaLoader, documentLoader)
 			if valid {
 				res = NewResponse(200, valid, []string{})

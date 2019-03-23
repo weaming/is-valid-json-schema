@@ -3,7 +3,7 @@ package main
 import (
 	"strings"
 
-	gojc "github.com/xeipuuv/gojsonschema"
+	gojs "github.com/xeipuuv/gojsonschema"
 )
 
 type SchemaError struct {
@@ -15,8 +15,8 @@ func (this SchemaError) Error() string {
 	return strings.Join(this.errors, "\n")
 }
 
-func ValidateSchema(schemaLoader, documentLoader gojc.JSONLoader) (bool, *SchemaError) {
-	result, err := gojc.Validate(schemaLoader, documentLoader)
+func ValidateSchema(schemaLoader, documentLoader gojs.JSONLoader) (bool, *SchemaError) {
+	result, err := gojs.Validate(schemaLoader, documentLoader)
 	if err != nil {
 		return false, &SchemaError{[]string{err.Error()}, false}
 	}

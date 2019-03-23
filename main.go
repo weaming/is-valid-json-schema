@@ -6,7 +6,7 @@ import (
 	"os"
 	fp "path/filepath"
 
-	gojc "github.com/xeipuuv/gojsonschema"
+	gojs "github.com/xeipuuv/gojsonschema"
 )
 
 var (
@@ -47,8 +47,8 @@ func parseArgs() bool {
 
 func main() {
 	if parseArgs() {
-		schemaLoader := gojc.NewReferenceLoader(fmt.Sprintf("file://%v", schema))
-		documentLoader := gojc.NewReferenceLoader(fmt.Sprintf("file://%v", data))
+		schemaLoader := gojs.NewReferenceLoader(fmt.Sprintf("file://%v", schema))
+		documentLoader := gojs.NewReferenceLoader(fmt.Sprintf("file://%v", data))
 		valid, err := ValidateSchema(schemaLoader, documentLoader)
 		if valid {
 			fmt.Println("The document is valid")
