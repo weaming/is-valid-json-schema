@@ -18,6 +18,7 @@ Usage of isFuckingValidJSONSchema:
 ```
 
 * `-listen`: serve `$CWD` filesystem as API to provide JSON schema validation service.
-  * URI endswith '/': `<uri>/index.jon` as schema
-  * `foo/bar`: `foo/bar.jon` as schema
+  * URI endswith `/`: `<uri>/index.json` as schema
+  * `foo/bar`: `foo/bar.json` as schema
+  * `./map.json` to define your custom mapping from URI to schema file. See [map.json](./map.json)
 * `-data`+`-schema`: CLI to varify JSON file `schema` against JSON file `data`
