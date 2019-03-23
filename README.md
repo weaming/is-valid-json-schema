@@ -21,4 +21,4 @@ Usage of isFuckingValidJSONSchema:
   * URI endswith `/`: `<uri>/index.json` as schema
   * `foo/bar`: `foo/bar.json` as schema
   * `./map.json` to define your custom mapping from URI to schema file. See [map.json](./map.json)
-* `-data`+`-schema`: CLI to varify `schema` file against `data` file
+* `-data`+`-schema`: CLI to verify `data` file against `schema` file
