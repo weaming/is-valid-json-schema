@@ -18,12 +18,17 @@ const confPath = "./map.json"
 
 var URI2Path = map[string]string{}
 
-func init() {
+func loadIntoURI2Path() {
 	var conf interface{}
 	if libfs.IsFile(confPath) {
 		libconf.NewConfig("./map.json", &conf)
 		for k, v := range conf.(map[string]interface{}) {
-			URI2Path[k] = v.(string)
+			switch v := v.(type) {
+			case string:
+				URI2Path[k] = v
+			default:
+				log.Fatal(fmt.Sprintf("%v has type %T\n", v, v))
+			}
 		}
 	}
 }
@@ -41,9 +46,11 @@ func ServeSchemaAsAPI(listen string) {
 	log.Printf("Listening on %v\n", listen)
 
 	// print map
+	loadIntoURI2Path()
 	bin, _ := libser.JSON(URI2Path)
 	fmt.Println(string(bin))
 
+	// serve http
 	log.Fatal(http.ListenAndServe(listen, nil))
 }
 
