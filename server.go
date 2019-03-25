@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -9,6 +10,7 @@ import (
 	"strings"
 
 	libconf "github.com/weaming/golib/config"
+	libdj "github.com/weaming/golib/deepjson"
 	libfs "github.com/weaming/golib/fs"
 	libser "github.com/weaming/golib/serilize"
 	gojs "github.com/xeipuuv/gojsonschema"
@@ -102,6 +104,26 @@ var handler = func(w http.ResponseWriter, r *http.Request) {
 		data, e := ioutil.ReadAll(r.Body)
 		OK(e)
 
+		dataKeyPath := ""
+		if v, ok := r.URL.Query()["path"]; ok {
+			dataKeyPath = v[0]
+		}
+		if dataKeyPath != "" {
+			dataAny := map[string]interface{}{}
+			if e := json.Unmarshal(data, &dataAny); e != nil {
+				res = NewResponse(400, false, []string{e.Error()})
+				goto writeback
+			}
+			node := libdj.NewRootNode(dataAny)
+			dataTarget := node.GetByPath(strings.Split(dataKeyPath, "/"))
+			// rerwite data
+			data, e = json.Marshal(dataTarget.Value)
+			if e != nil {
+				res = NewResponse(400, false, []string{e.Error()})
+				goto writeback
+			}
+		}
+
 		if !libfs.IsFile(schema) {
 			res = NewResponse(404, false, []string{fmt.Sprintf("file %v does not exist", schema)})
 		} else {
@@ -120,6 +142,7 @@ var handler = func(w http.ResponseWriter, r *http.Request) {
 		res = NewResponse(405, false, []string{fmt.Sprintf("method %v not allowed", r.Method)})
 	}
 
+writeback:
 	// write response
 	if !res.IsValid() {
 		log.Fatal("bug in ServeSchemaAsAPI()")
