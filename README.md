@@ -1,14 +1,14 @@
-# isFuckingValidJSONSchema
+# is-valid-json-schema
 ## Install
 
 ```
-go get -u github.com/weaming/isFuckingValidJSONSchema
+go get -u github.com/weaming/is-valid-json-schema
 ```
 
 ## Usage
 
 ```
-Usage of isFuckingValidJSONSchema:
+Usage of is-valid-json-schema:
   -data string
     	data json path
   -listen string
