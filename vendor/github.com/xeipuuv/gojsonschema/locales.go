@@ -377,7 +377,7 @@ func (l DefaultLocale) MustBeOfType() string {
 
 // MustBeValidRegex returns a format-string to format an error where a regex is invalid
 func (l DefaultLocale) MustBeValidRegex() string {
-	return `{{.key}} must be a valid regex`
+	return `{{.key}} must be a valid regex: {{.value}}`
 }
 
 // MustBeValidFormat returns a format-string to format an error where a value does not match the expected format
