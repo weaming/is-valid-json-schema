@@ -3,7 +3,8 @@
   "additionalProperties": false,
   "properties": {
     "hello": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^(\\\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$"
     }
   },
   "required": [
